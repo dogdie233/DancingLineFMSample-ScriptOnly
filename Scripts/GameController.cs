@@ -45,7 +45,6 @@ namespace Level
 
 		private static void StateChangeEventCompleted(StateChangeEvent arg)
 		{
-            Debug.Log("test: " + arg.test);
             if (arg.canceled)
                 return;
             _state = arg.newState;
@@ -58,14 +57,14 @@ namespace Level
 		}
 
 		private void Awake()
-		{
+        {
+            bgButton.onClick.AddListener(() => { EventManager.onBGButtonClick.Invoke(); });
             bgButton.onClick.AddListener(() => {
                 if (_state != GameState.Playing && _state != GameState.WaitingRespawn && (int)_state + 1 < Enum.GetNames(typeof(GameState)).Length)
 				{
                     EventManager.RunStateChangeEvent(_state, (GameState)((int)_state + 1), StateChangeEventCompleted);
                 }
             });
-            bgButton.onClick.AddListener(() => { EventManager.onBGButtonClick.Invoke(); });
             if (instance == null && instance != this)
                 instance = this;
             else

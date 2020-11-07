@@ -6,6 +6,12 @@ namespace Level.Event
 {
     public class GameOverEvent
     {
+        public readonly DeathCause deathCause;
         public bool canceled = false;
+
+        public GameOverEvent(DeathCause deathCause)
+		{
+            this.deathCause = deathCause;
+		}
     }
 }

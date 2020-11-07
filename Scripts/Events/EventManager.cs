@@ -18,14 +18,20 @@ namespace Level.Event
 		public static void RunStateChangeEvent(GameState oldState, GameState newState, UnityAction<StateChangeEvent> callback)
 		{
 			StateChangeEvent arg = new StateChangeEvent(oldState, newState);
-			try { OnStateChange.BeginInvoke(ref arg, ar => { OnStateChange.EndInvoke(ref arg, ar); callback.Invoke(arg); }, null); }
+			try {
+				IAsyncResult iar = OnStateChange.BeginInvoke(ref arg, ar => { callback.Invoke(arg); }, null);
+				OnStateChange.EndInvoke(ref arg, iar);
+			}
 			catch (NullReferenceException) { callback.Invoke(arg); }
 		}
 
-		public static void RunGameOverEvent(UnityAction<GameOverEvent> callback)
+		public static void RunGameOverEvent(DeathCause deathCause, UnityAction<GameOverEvent> callback)
 		{
-			GameOverEvent arg = new GameOverEvent();
-			try { onGameOver.BeginInvoke(ref arg, ar => { onGameOver.EndInvoke(ref arg, ar); callback.Invoke(arg); }, null); }
+			GameOverEvent arg = new GameOverEvent(deathCause);
+			try {
+				IAsyncResult iar = onGameOver.BeginInvoke(ref arg, ar => { callback.Invoke(arg); }, null);
+				onGameOver.EndInvoke(ref arg, iar);
+			}
 			catch (NullReferenceException) { callback.Invoke(arg); }
 		}
 	}
