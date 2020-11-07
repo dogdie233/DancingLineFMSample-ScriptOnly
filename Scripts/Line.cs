@@ -1,3 +1,4 @@
+using Level.Event;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -62,15 +63,15 @@ namespace Level
         private void UpdateTurnListener(bool value)
 		{
             if (value)
-                GameController.instance.bgButton.onClick.AddListener(() => { Turn(false); });
+                EventManager.onBGButtonClick.AddListener(() => { Turn(false); });
             else
-                GameController.instance.bgButton.onClick.RemoveListener(() => { Turn(false); });
+                EventManager.onBGButtonClick.RemoveListener(() => { Turn(false); });
         }
 
         void Awake()
 		{
             rigidbody = GetComponent<Rigidbody>();
-            GameController.events.onStart.AddListener(() => { if (_controlled) moving = true;});
+            EventManager.onStart.AddListener(() => { if (_controlled) moving = true;});
         }
 
 		void Start()
