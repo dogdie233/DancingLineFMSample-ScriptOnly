@@ -2,15 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Level.Event
+namespace Event
 {
-    public class StateChangeEvent
+    public class StateChangeEventArgs
     {
         public readonly GameState lastState;
         public readonly GameState newState;
         public bool canceled = false;
 
-        public StateChangeEvent(GameState lastState, GameState newState)
+        public StateChangeEventArgs(GameState lastState, GameState newState)
         {
             this.lastState = lastState;
             this.newState = newState;

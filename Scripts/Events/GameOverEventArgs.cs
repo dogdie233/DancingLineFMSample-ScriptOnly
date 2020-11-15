@@ -2,14 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Level.Event
+namespace Event
 {
-    public class GameOverEvent
+    public class GameOverEventArgs
     {
         public readonly DeathCause deathCause;
         public bool canceled = false;
 
-        public GameOverEvent(DeathCause deathCause)
+        public GameOverEventArgs(DeathCause deathCause)
 		{
             this.deathCause = deathCause;
 		}
